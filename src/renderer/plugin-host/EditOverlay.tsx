@@ -76,7 +76,9 @@ export function EditOverlay({
   const start = async (e: PointerEvent<HTMLDivElement>, kind = 'move') => {
     if (e.button !== 0) return;
     e.preventDefault();
-    e.currentTarget.focus();
+    // Without preventScroll the first click on a page taller than the window scrolled the view to the top of
+    // the page, and the click was then read some way below the pointer: the paragraph under a heading opened.
+    e.currentTarget.focus({ preventScroll: true });
     e.currentTarget.setPointerCapture(e.pointerId);
     const pt = point(e);
     let next = selected;

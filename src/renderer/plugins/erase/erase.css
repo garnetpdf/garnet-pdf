@@ -1,0 +1,10 @@
+.erase-box {
+  position: absolute;
+  border: 1.5px dashed var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  pointer-events: none;
+}
+.erase-lead {
+  margin: 0;
+  line-height: 1.5;
+}

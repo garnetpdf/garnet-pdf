@@ -195,6 +195,19 @@ export function Viewer({ tab }: { tab: Tab }) {
       updating.current = false;
       return;
     }
+    // A change that leaves every page where it was (an edit, a comment, an undo) is no reason to scroll.
+    // The rows are made again after each change, and the view used to jump to the top of the page.
+    const was = shown.current.rows;
+    if (
+      before.docId === tab.info.docId &&
+      before.page === tab.page &&
+      before.layout === tab.layout &&
+      before.rotation === tab.rotation &&
+      before.zoom === tab.zoom &&
+      was.length === rows.length &&
+      was.every((r, i) => r.top === rows[i].top && r.height === rows[i].height)
+    )
+      return;
     const row = rows.find((r) => r.pages.some((p) => p.index === tab.page));
     if (row && el) {
       el.scrollTop = row.top - 24;
