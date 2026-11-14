@@ -1,0 +1,15 @@
+node_modules/
+out/
+dist/
+release/
+.vite/
+coverage/
+test-results/
+playwright-report/
+*.log
+*.garnet-tmp
+.DS_Store
+
+.builder-cache/
+__pycache__/
+*.pyc

@@ -1,0 +1,129 @@
+appId: com.garnetpdf.app
+productName: Garnet PDF
+directories:
+  output: release
+  buildResources: resources
+files:
+  - out/**/*
+  - package.json
+  - '!**/*.map'
+  - '!node_modules/**/test{,s}/**'
+  # pdf.js runs only in main as the second parser of the save check (page count, no rendering):
+  # keep the legacy Node build and its fake-worker file, drop the browser builds, viewer and assets.
+  - '!node_modules/pdfjs-dist/{build,web,types,image_decoders,cmaps,standard_fonts,wasm,iccs}/**'
+  - '!node_modules/pdfjs-dist/legacy/{web,image_decoders}/**'
+  - '!node_modules/pdfjs-dist/legacy/build/*.min.mjs'
+  - '!node_modules/pdfjs-dist/legacy/build/pdf.{sandbox,renderer}.mjs'
+  # pdf.js only needs @napi-rs/canvas to render; page counting works without it (it logs a warning)
+  - '!node_modules/@napi-rs/**'
+extraResources:
+  - from: resources/fonts
+    to: fonts
+  # the licence of the app and the notices of everything it is built with
+  - from: LICENSE
+    to: LICENSE.txt
+  - from: resources/THIRD-PARTY-NOTICES.txt
+    to: THIRD-PARTY-NOTICES.txt
+asar: true
+# The app never looks for updates and nothing is uploaded by a build. Without this line a build made
+# from a hosted repository writes that repository's address into the app (app-update.yml) and tries
+# to upload the result.
+publish: null
+# UI is English; Arabic kept for system dialogs on Arabic Windows (other Chromium locales ~47 MB)
+electronLanguages: [en-US, en-GB, ar]
+npmRebuild: false
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: zip
+      arch: [x64]
+  icon: resources/icon.ico
+  artifactName: Garnet-PDF-${version}-${arch}-portable.${ext}
+  signExecutable: false
+nsis:
+  artifactName: Garnet-PDF-Setup-${version}-${arch}.${ext}
+  oneClick: false
+  perMachine: false
+  allowElevation: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  # installs for the current user only and never asks for administrator rights: no elevation helper
+  packElevateHelper: false
+  include: resources/installer.nsh
+# Microsoft Store package (MSIX). Built on Windows with scripts/dist-store.mjs, which takes the identity
+# name, the publisher and the publisher's display name from the environment: the real values come from
+# the Store account. The Store signs the package, so Windows shows no warning when it is installed.
+appx:
+  displayName: Garnet PDF
+  applicationId: GarnetPDF
+  backgroundColor: transparent
+  languages: [en-GB, en-US]
+  # Windows 10 version 1809 or newer; tested up to Windows 11 version 24H2
+  minVersion: 10.0.17763.0
+  maxVersionTested: 10.0.26100.0
+  artifactName: Garnet-PDF-${version}-${arch}-store.${ext}
+  # PDF files are offered under "Open with"; Windows never makes a Store app the default by itself.
+  # (No capability is listed: the package asks for nothing but permission to run as a desktop app.)
+  customExtensionsPath: resources/appx-extensions.xml
+# One download for every Mac: Apple silicon and Intel in one app. Built on a Mac with scripts/dist-mac.sh.
+mac:
+  target:
+    - target: dmg
+      arch: [universal]
+    - target: zip
+      arch: [universal]
+  category: public.app-category.productivity
+  icon: resources/icon.icns
+  artifactName: Garnet-PDF-${version}-mac.${ext}
+  darkModeSupport: true
+  # Signed builds use the hardened runtime with one permission: machine code made while running
+  # (JavaScript and the WebAssembly PDF engine). Without a certificate scripts/dist-mac.sh makes a
+  # locally signed test build instead.
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: resources/entitlements.mac.plist
+  entitlementsInherit: resources/entitlements.mac.plist
+  extendInfo:
+    # The app can open PDF files (Finder "Open With", a drop on the Dock icon) and does not ask to be
+    # the default app for them.
+    CFBundleDocumentTypes:
+      - CFBundleTypeName: PDF document
+        CFBundleTypeRole: Editor
+        LSHandlerRank: Alternate
+        LSItemContentTypes: [com.adobe.pdf]
+        CFBundleTypeExtensions: [pdf]
+    # Electron's stock texts for asking to use these. The app never asks: they are taken out.
+    NSCameraUsageDescription: null
+    NSMicrophoneUsageDescription: null
+    NSAudioCaptureUsageDescription: null
+    NSBluetoothAlwaysUsageDescription: null
+    NSBluetoothPeripheralUsageDescription: null
+  extraResources:
+    # the licences of Chromium and Electron, inside the app as they are next to it on Windows
+    - from: node_modules/electron/dist/LICENSES.chromium.html
+      to: LICENSES.chromium.html
+    - from: node_modules/electron/dist/LICENSE
+      to: LICENSE.electron.txt
+# The window people see when they open the download: the app on the left, Applications on the right.
+dmg:
+  title: ${productName}
+  background: dmg-background.png
+  iconSize: 96
+  contents:
+    - x: 140
+      y: 190
+      type: file
+    - x: 400
+      y: 190
+      type: link
+      path: /Applications
+  # scripts/dist-mac.sh signs the disk image and has it checked by Apple when the certificate is there
+  sign: false
+  writeUpdateInfo: false
+linux:
+  target: [dir, AppImage]
+  category: Office
+  icon: resources/icon.png
+  artifactName: Garnet-PDF-${version}-${arch}.${ext}

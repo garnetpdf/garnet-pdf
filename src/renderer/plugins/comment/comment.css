@@ -1,0 +1,486 @@
+/* Comment and Fill & Sign overlays, panels and dialogs. Theme tokens only. */
+
+.context-toolbar [aria-label='Comment tools'] button > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.context-toolbar [aria-label='Comment tools'] button {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+.context-toolbar [aria-label='Comment tools'] button[title='Comments list'] {
+  margin-left: var(--space-2);
+}
+
+.annot-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.annot-layer.capture {
+  pointer-events: auto;
+}
+.annot-layer.hand,
+.annot-layer.hand * {
+  pointer-events: none !important;
+}
+.annot-hit {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.annot-hit.movable {
+  cursor: move;
+}
+.annot-hit:hover {
+  outline: 1px dashed color-mix(in srgb, var(--select) 70%, transparent);
+  outline-offset: 1px;
+}
+.annot-hit-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.annot-hit-stroke {
+  pointer-events: stroke;
+  fill: none;
+  stroke: transparent;
+  cursor: pointer;
+}
+.annot-hit-stroke.movable {
+  cursor: move;
+}
+.annot-hit-stroke:hover {
+  stroke: color-mix(in srgb, var(--select) 22%, transparent);
+}
+.annot-frame {
+  pointer-events: none;
+}
+.annot-frame.moving {
+  border-style: dashed;
+}
+.annot-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.annot-text-sel {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  border-radius: 1px;
+}
+:root[data-theme='dark'] .annot-text-sel {
+  mix-blend-mode: normal;
+}
+.annot-selection-bar {
+  position: absolute;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  transform: translateX(-100%);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  z-index: 3;
+  width: max-content;
+  height: max-content;
+}
+.annot-selection-bar .icon-button {
+  width: 28px;
+  height: 28px;
+}
+.annot-hint {
+  position: absolute;
+  left: 50%;
+  top: var(--space-2);
+  transform: translateX(-50%);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 10px;
+  font-size: 12px;
+  pointer-events: none;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+.annot-stamp-ghost {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--select);
+  border-radius: var(--radius);
+  color: var(--select);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  pointer-events: none;
+  font-size: 12px;
+}
+.annot-ghost-image {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.7;
+  outline: 1px dashed var(--select);
+}
+.annot-ghost-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.annot-text-editor {
+  position: absolute;
+  margin: 0;
+  border: 1px dashed var(--select);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  resize: none;
+  overflow: hidden;
+  outline: none;
+  pointer-events: auto;
+  white-space: pre;
+  box-sizing: border-box;
+  z-index: 4;
+}
+:root[data-theme='dark'] .annot-text-editor {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.note-popup {
+  position: absolute;
+  width: 248px;
+  margin-left: 8px;
+  background: var(--surface-raised);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow), 0 1px 3px rgba(0, 0, 0, 0.12);
+  padding: var(--space-2);
+  pointer-events: auto;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+.note-popup.left {
+  margin-left: 0;
+  transform: translateX(calc(-100% - 28px));
+}
+.note-popup.up {
+  translate: 0 calc(-100% + 24px);
+}
+.note-popup header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.note-popup header svg {
+  color: var(--text-muted);
+}
+.note-author {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.note-date {
+  font-size: 11px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.icon-button.small {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  padding: 4px;
+}
+.note-popup textarea,
+.comment-body textarea,
+.annot-inspector textarea {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  padding: 6px 8px;
+  box-sizing: border-box;
+  line-height: 1.45;
+}
+.note-reply,
+.comment-reply {
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+}
+.note-reply p,
+.comment-reply p {
+  margin: 3px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.note-reply-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+}
+.note-reply-form,
+.comment-reply-form {
+  display: flex;
+  gap: 4px;
+}
+.note-reply-form input,
+.comment-reply-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-content:has(.comments-panel) {
+  width: 280px;
+}
+.comments-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0 var(--space-3) var(--space-3);
+}
+.comments-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.comments-filters select {
+  min-width: 0;
+  font-size: 12px;
+}
+.comments-count {
+  font-size: 11px;
+}
+.comments-page h3 {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: var(--space-2) 0 4px;
+}
+.comment-row {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+}
+.comment-row.active {
+  border-color: var(--border);
+  background: var(--surface-muted);
+}
+.comment-head {
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: start;
+  padding: 6px;
+}
+.comment-swatch {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--surface-muted);
+  flex-shrink: 0;
+}
+.comment-row.active .comment-swatch {
+  background: var(--surface);
+}
+.comment-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+.comment-title {
+  font-weight: 600;
+  font-size: 12px;
+}
+.comment-text {
+  font-size: 12px;
+  color: var(--text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+}
+.comment-replies {
+  font-size: 11px;
+}
+.comment-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 6px 6px;
+  font-size: 12px;
+}
+.comment-date {
+  font-size: 11px;
+}
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.annot-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  font-size: 12px;
+  margin-bottom: var(--space-4);
+}
+.annot-inspector + .annot-inspector {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+.annot-inspector-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.annot-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.annot-field > span {
+  color: var(--text-muted);
+}
+.annot-field.inline {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.annot-field.inline input[type='number'] {
+  width: 72px;
+}
+.annot-field.two select {
+  width: 72px;
+  min-width: 0;
+}
+.annot-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.swatch {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--text) 25%, transparent);
+}
+.swatch.selected {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--select);
+}
+.swatch.none {
+  background: linear-gradient(135deg, transparent 45%, var(--danger) 45%, var(--danger) 55%, transparent 55%), var(--surface);
+}
+.annot-swatches input[type='color'] {
+  width: 26px;
+  height: 22px;
+  min-height: 22px;
+  padding: 1px;
+}
+.annot-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.annot-inspector-actions {
+  display: flex;
+  gap: 6px;
+}
+.annot-inspector-actions button {
+  border-color: var(--border);
+}
+.annot-dates {
+  margin: 0;
+  font-size: 11px;
+}
+.annot-error {
+  color: var(--danger);
+  margin: var(--space-2) 0 0;
+}
+
+.annot-dialog.wide .dialog {
+  width: min(660px, 94vw);
+}
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-2);
+}
+.stamp-choice {
+  border: 2px solid;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 10px;
+  background: var(--surface);
+}
+.stamp-heading {
+  font-size: 12px;
+  margin: var(--space-4) 0 var(--space-2);
+}
+.stamp-custom-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.stamp-custom {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+}
+.stamp-custom-pick {
+  padding: 2px;
+  background: #fff;
+}
+.stamp-custom-pick img {
+  max-width: 120px;
+  max-height: 56px;
+  display: block;
+}
+.stamp-empty,
+.stamp-note {
+  font-size: 12px;
+  margin: var(--space-2) 0 0;
+}
+.stamp-actions {
+  margin-top: var(--space-3);
+}
+.stamp-actions button {
+  border-color: var(--border);
+}

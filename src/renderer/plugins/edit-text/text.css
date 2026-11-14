@@ -1,0 +1,123 @@
+.text-edit-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+.text-scratch-page {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.text-edit-frame {
+  position: absolute;
+  box-sizing: content-box;
+  border: 1px solid var(--select);
+  outline: 2px solid var(--surface-raised);
+  background: transparent;
+  pointer-events: auto;
+  cursor: text;
+}
+.text-editor {
+  outline: 0;
+  min-height: 1em;
+  white-space: pre-wrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  caret-color: var(--select);
+  unicode-bidi: plaintext;
+}
+.text-editor::selection {
+  background: var(--select-soft);
+}
+.text-edit-actions {
+  position: absolute;
+  display: flex;
+  gap: 4px;
+  top: 100%;
+  margin-top: 5px;
+  inset-inline-start: 0;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  z-index: 13;
+}
+.text-edit-actions button {
+  min-height: 28px;
+  padding: 2px 8px;
+  font:
+    12px Inter,
+    sans-serif;
+}
+.text-edit-notice {
+  position: absolute;
+  top: 100%;
+  margin-top: 40px;
+  inset-inline-start: 0;
+  max-width: 280px;
+  padding: 6px 8px;
+  color: var(--text);
+  background: var(--warning-bg);
+  border-radius: var(--radius);
+  font:
+    12px/1.35 Inter,
+    sans-serif;
+  z-index: 13;
+}
+/* Outside the box, so it never sits on the last letters of a line. */
+.text-width-grip {
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  width: 10px;
+  height: 24px;
+  border-radius: 5px;
+  background: var(--select);
+  transform: translateY(-50%);
+  cursor: ew-resize;
+  touch-action: none;
+}
+.text-move-grip {
+  position: absolute;
+  inset-inline-start: 0;
+  top: -26px;
+  width: 26px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--select);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  color: var(--select);
+  cursor: move;
+  touch-action: none;
+}
+.text-inspector {
+  display: grid;
+  gap: 10px;
+}
+.text-inspector label,
+.text-inspector .text-field {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.text-inspector select,
+.text-inspector input {
+  width: 100%;
+}
+.text-inspector .segmented {
+  display: flex;
+  flex-wrap: wrap;
+}
+.text-inspector .segmented button {
+  flex: 1;
+  min-width: 50px;
+}

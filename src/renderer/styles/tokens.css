@@ -1,0 +1,304 @@
+/* Inter in four real weights. One regular file declared for every weight left all bold text regular. */
+@font-face {
+  font-family: Inter;
+  src: url('../../../resources/fonts/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/inter-latin-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/inter-latin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: Inter;
+  src: url('../assets/fonts/inter-latin-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  --surface: #fff;
+  --surface-raised: #fff;
+  --surface-muted: #f5f6f8;
+  --canvas: #e9ebef;
+  --text: #222733;
+  --text-muted: #626b7a;
+  --border: #d9dde5;
+  /* Brand accent (the red of the app icon): active mode, main buttons, small marks. Used sparingly. */
+  --accent: #d11f2d;
+  --accent-hover: #b01823;
+  --accent-soft: #fdeeed;
+  /* Filled buttons: a solid red with white text in both themes. */
+  --accent-fill: #d11f2d;
+  --accent-fill-hover: #b01823;
+  --on-accent: #fff;
+  /* Working selection on the page and in page lists: frames, handles, guides, the text cursor. Stays blue
+     so a selection never reads as an error or as a redaction mark. */
+  --select: #225ad6;
+  --select-soft: #e9f0ff;
+  /* Quiet state colours for the status bar. */
+  --ok: #1d8a4b;
+  --pending: #c77700;
+  --danger: #a3142a;
+  --warning: #77500b;
+  --warning-bg: #fff4d6;
+  --focus: #3473eb;
+  --shadow: 0 4px 16px #101c3012;
+  --radius: 6px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13px;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --surface: #202329;
+  --surface-raised: #292d35;
+  --surface-muted: #262a32;
+  --canvas: #15171c;
+  --text: #eef0f5;
+  --text-muted: #adb5c5;
+  --border: #404651;
+  --accent: #ff7d82;
+  --accent-hover: #ff9da1;
+  --accent-soft: #46262a;
+  --accent-fill: #d7303b;
+  --accent-fill-hover: #e2434d;
+  --on-accent: #fff;
+  --select: #85acff;
+  --select-soft: #2d3d5e;
+  --ok: #6fd29b;
+  --pending: #f2b755;
+  --danger: #ff9baa;
+  --warning: #f0cf88;
+  --warning-bg: #3b321f;
+  --focus: #8db1ff;
+  --shadow: 0 4px 16px #0003;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--surface);
+  overflow: hidden;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+button,
+input,
+select {
+  min-height: 28px;
+}
+button {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  padding: 5px 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+button:hover:not(:disabled) {
+  background: var(--surface-muted);
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+input,
+select {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  padding: 5px 8px;
+}
+input[type='checkbox'] {
+  min-height: 18px;
+}
+svg {
+  flex-shrink: 0;
+}
+button.primary {
+  background: var(--accent-fill);
+  color: var(--on-accent);
+}
+button.primary:hover:not(:disabled) {
+  background: var(--accent-fill-hover);
+}
+.icon-button {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.separator {
+  height: 20px;
+  width: 1px;
+  background: var(--border);
+  margin: 0 6px;
+}
+.muted {
+  color: var(--text-muted);
+}
+.shortcut {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+.panel {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+.panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 16px;
+  margin: 0;
+}
+.empty-state {
+  color: var(--text-muted);
+  padding: 28px 16px;
+  text-align: center;
+  line-height: 1.6;
+}
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: #10162166;
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+.dialog {
+  width: min(520px, 90vw);
+  max-height: 85vh;
+  overflow: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 16px 80px #0004;
+  padding: 20px;
+}
+.dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.dialog h2 {
+  font-size: 16px;
+  margin: 0;
+}
+.dialog footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 14px 0;
+}
+.toast-stack {
+  position: fixed;
+  bottom: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1500;
+}
+.toast {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-raised);
+  box-shadow: var(--shadow);
+  padding: 12px 18px;
+  max-width: 650px;
+}
+.segmented {
+  display: flex;
+  gap: 2px;
+}
+.segmented button[aria-pressed='true'],
+button.selected {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.context-menu {
+  position: fixed;
+  z-index: 1200;
+  min-width: 180px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 4px;
+  border-radius: 6px;
+}
+.context-menu button {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+.tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+.tooltip-wrap {
+  display: inline-flex;
+}
+.tooltip-wrap [role='tooltip'] {
+  display: none;
+}
+.tooltip-wrap:focus-within [role='tooltip'],
+.tooltip-wrap:hover [role='tooltip'] {
+  display: block;
+  position: fixed;
+  z-index: 2000;
+  bottom: 30px;
+  left: 50%;
+  padding: 7px 10px;
+  background: var(--text);
+  color: var(--surface);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.primary .shortcut {
+  color: inherit;
+  opacity: 0.9;
+}

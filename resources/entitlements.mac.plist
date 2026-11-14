@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!--
+      The only permission the app asks macOS for. The JavaScript engine turns JavaScript and
+      WebAssembly (the PDF engine is WebAssembly) into machine code while the app runs, which the
+      hardened runtime allows only with this entry. Nothing else is asked for: no network server or
+      client entry, no files outside what the user opens, no camera, microphone or location.
+    -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+  </dict>
+</plist>

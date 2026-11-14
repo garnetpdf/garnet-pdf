@@ -1,0 +1,180 @@
+.organize-root {
+  display: contents;
+}
+.viewer-container.organize-active > .viewer {
+  visibility: hidden;
+}
+.organize {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas);
+  min-width: 0;
+}
+.organize-bar {
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.organize-count {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.organize-hint {
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.organize-size {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+}
+.organize-size input[type='range'] {
+  width: 120px;
+  min-height: 20px;
+  accent-color: var(--accent);
+}
+.organize-scroll {
+  flex: 1;
+  overflow: auto;
+  padding: 20px 24px 40px;
+  scrollbar-gutter: stable;
+}
+.organize-grid {
+  position: relative;
+  display: grid;
+  justify-content: start;
+  align-items: start;
+  outline: none;
+}
+.organize-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: default;
+  user-select: none;
+  outline: none;
+}
+.organize-tile:hover {
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+.organize-tile.selected {
+  background: var(--select-soft);
+  border-color: var(--select);
+}
+.organize-tile:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.organize-thumb {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.organize-paper {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 4px #10162129;
+}
+.organize-paper canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.organize-tile.selected .organize-paper {
+  border-color: var(--select);
+}
+.organize-tile-actions {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  display: none;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 6px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.organize-tile:hover .organize-tile-actions {
+  display: flex;
+}
+.organize-tile-actions button {
+  width: 26px;
+  height: 26px;
+  min-height: 26px;
+  padding: 0;
+  color: var(--text-muted);
+}
+.organize-tile-actions button:hover {
+  color: var(--text);
+}
+.organize-tile-actions button[data-action='delete']:hover {
+  color: var(--danger);
+}
+.organize-caption {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  max-width: 100%;
+}
+.organize-tile.selected .organize-caption {
+  color: var(--select);
+  font-weight: 600;
+}
+.organize-label {
+  padding: 0 5px;
+  border-radius: 4px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.organize-drop-mark {
+  position: absolute;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--select);
+  pointer-events: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--select) 22%, transparent);
+}
+.organize-drag-ghost {
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--select);
+  color: var(--surface);
+  font: 600 12px Inter, Arial, sans-serif;
+}
+.document-tab.organize-tab-target {
+  outline: 2px dashed var(--select);
+  outline-offset: -2px;
+  background: var(--select-soft);
+}

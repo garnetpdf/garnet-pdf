@@ -1,0 +1,30 @@
+/*
+ * Mac: the system draws its own close, minimise and zoom buttons at the left of the title bar, so the
+ * app's three buttons and its name are left out (the name is in the menu bar) and the document tabs
+ * start to the right of the system buttons. In full screen the system buttons are gone.
+ */
+.app.mac .titlebar {
+  padding-left: 84px;
+  padding-right: 16px;
+}
+.app.mac.fullscreen .titlebar {
+  padding-left: 8px;
+}
+.app.mac .brand,
+.app.mac .window-controls {
+  display: none;
+}
+/* The empty part of the tab strip moves the window, as a title bar does; a tab itself does not. */
+.app.mac .titlebar .tabs {
+  -webkit-app-region: drag;
+}
+.app.mac .titlebar .document-tab {
+  -webkit-app-region: no-drag;
+}
+
+/* About in a dialog of its own (it is also the last part of Settings, where it has a rule above it). */
+.about-only .about {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
