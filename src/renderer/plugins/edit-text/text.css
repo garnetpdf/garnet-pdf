@@ -46,6 +46,10 @@
   box-shadow: var(--shadow);
   white-space: nowrap;
   z-index: 13;
+  /* The box sits inside the frame, which carries the paragraph's own colour and spacing: the buttons
+     inherited black text on the dark theme (and white text on white for a light paragraph). */
+  color: var(--text);
+  letter-spacing: normal;
 }
 .text-edit-actions button {
   min-height: 28px;
